@@ -1,0 +1,21 @@
+#!/bin/bash
+TEMP=$(getopt -o o: --long fps:,type:,vqscale:,output: -- "$@")
+eval set -- "$TEMP"
+
+out=video.avi
+fps=25
+vqscale=3
+type=png
+
+while true
+do
+    case "$1" in
+	-o|--output) out=$2; shift 2 ;;
+	--fps) fps=$2; shift 2 ;;
+	--type) type=$2; shift 2 ;;
+	--vqscale) vqscale=$2; shift 2 ;;
+	--) shift; break ;;
+    esac	
+done
+mencoder mf://*.$type -mf fps=$fps -ovc lavc -lavcopts vqscale=$vqscale -o $out
+    
