@@ -1,0 +1,4 @@
+#!/bin/bash
+
+wc_out=$(xclip -out | wc)
+zenity --info --text "\tL\tW\tC\n $wc_out" --title "Word count"
