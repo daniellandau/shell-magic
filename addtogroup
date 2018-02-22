@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ $# != 1 ]]
+then
+  echo "Give the name of the group as paramater"
+  exit 1
+fi
+
+me=$(whoami)
+echo $me
+sudo usermod -a -G $1 $me
+newgrp $1

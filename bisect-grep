@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [[ "$#" != 1 ]]
+then
+  echo """Usage: $0 <search term>"""
+  exit 1
+fi
+
+git bisect start
+git bisect bad
+git bisect good $(git log --pretty=oneline --reverse| head -1 | cut -d' ' -f1)
+
+script=$(mktemp)
+echo """
+#!/bin/bash
+
+if git grep '$1' &>/dev/null
+then
+  false
+else
+  true
+fi
+""" >"$script"
+chmod +x "$script"
+
+git bisect run "$script"
+rm "$script"
+
+git bisect reset

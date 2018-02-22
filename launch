@@ -1,0 +1,3 @@
+#!/bin/bash
+
+nohup "$@" >~/.cache/nohup.out 2>&1 & 

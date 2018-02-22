@@ -1,0 +1,5 @@
+30 8 25 * * curl -X POST
+https://{{TOKEN}}@api.flowdock.com/flows/{{ORG}}/{{FLOW}}/messages
+-H 'Content-Type: application/json' -d '{"event": "message",
+"external_user_name": "{{SHOW_AS}}", "content":"{{MESSAGE}}"}'
+
