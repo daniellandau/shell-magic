@@ -1,3 +1,5 @@
 #!/bin/bash
 
-xmodmap -e 'keycode  94 = adiaeresis odiaeresis NoSymbol NoSymbol Adiaeresis Odiaeresis'
+
+setxkbmap -option caps:escape
+xmodmap -e 'keycode 94 = adiaeresis odiaeresis adiaeresis odiaeresis Adiaeresis Odiaeresis'
