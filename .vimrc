@@ -1,91 +1,110 @@
-" All system-wide defaults are set in $VIMRUNTIME/archlinux.vim (usually just
-" /usr/share/vim/vimfiles/archlinux.vim) and sourced by the call to :runtime
-" you can find below.  If you wish to change any of those settings, you should
-" do it in this file (/etc/vimrc), since archlinux.vim will be overwritten
-" everytime an upgrade of the vim packages is performed.  It is recommended to
-" make changes after sourcing archlinux.vim since it alters the value of the
-" 'compatible' option.
+set nocompatible               " be iMproved
+filetype off                   " required!
 
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages.
-runtime! archlinux.vim
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
 
-" If you prefer the old-style vim functionalty, add 'runtime! vimrc_example.vim'
-" Or better yet, read /usr/share/vim/vim73/vimrc_example.vim or the vim manual
-" and configure vim to your own liking!
 
-set nocompatible
-filetype off
-
-call vundle#rc()
-
-Bundle 'tomtom/tcomment_vim'
-" Bundle 'Lokaltog/vim-easymotion'
+" My Bundles here:
+"
+" original repos on github
+Bundle 'terryma/vim-multiple-cursors'
 Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Bundle 'git://git.wincent.com/command-t.git'
+" Bundle 'derekwyatt/vim-scala'
+" Bundle 'xolox/vim-misc'
+" Bundle 'xolox/vim-easytags'
+" Bundle 'honza/vim-snippets'
+" Bundle 'SirVer/ultisnips'
 Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-sensible'
-" Bundle 'tpope/vim-eunuch'
-" Bundle 'tpope/vim-sleuth'
-" Bundle 'szw/vim-tags'
-" Bundle 'taglist.vim'
-" Bundle 'c.vim'
-"Bundle 'ujihisa/neco-ghc'
-"Bundle 'lukerandall/haskellmode-vim'
-Bundle 'vim-scripts/YankRing.vim'
-"Bundle 'tpope/vim-rsi'
-Bundle 'rainux/vim-vala'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'kchmck/vim-coffee-script'
-"Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/vim-snippets'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'chrisbra/SudoEdit.vim'
+" Bundle 'pangloss/vim-javascript'
+" Bundle 'mxw/vim-jsx'
+Bundle 'rbgrouleff/bclose.vim' 
+" Bundle 'rainux/vim-vala'
+call vundle#end() 
 
+filetype plugin indent on     " required! 
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+"
 syntax on
-set encoding=utf-8
-"set showcmd                     " display incomplete commands
-filetype plugin indent on       " load file type plugins + indentation
-
-"" Whitespace
-set nowrap                      " don't wrap lines
-set softtabstop=4 shiftwidth=4      " a tab is two spaces (or set this to 4)
-set expandtab                   " use spaces, not tabs (optional)
-set backspace=indent,eol,start  " backspace through everything in insert mode
-
-"" Searching
-set hlsearch                    " highlight matches
-set incsearch                   " incremental searching
-set ignorecase                  " searches are case insensitive...
-set smartcase                   " ... unless they contain at least one capital letter
-
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
-endif
-
-au BufRead,BufNewFile *.py let b:surround_45 = "\"\"\"\r\"\"\""
-au BufRead,BufNewFile *.txt set wrap linebreak nolist
-
-set mouse=a
-"let g:haddock_browser="/usr/bin/firefox"
-"let g:haddock_docdir="/usr/local/share/doc/ghc/html/"
-"au BufEnter *.hs compiler ghc
-
-" au BufEnter *.html ab cl class="clear-left"
-" au BufEnter *.html ab r class="right"
-" au BufEnter *.html ab b class="big"
-" au BufEnter *.html ab m class="mid"
-
-"au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
-
-set tags=tags;/
-
-autocmd VimLeave * call system("xsel -ib", getreg('+'))
-
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set tags=./tags;
+set mouse=
+set hlsearch
+set incsearch
+set suffixesadd=.js,.jsx
+set statusline=%F%m%r%h%w\ [type=%Y]\ [%{fugitive#statusline()}]\ [POS=%04l,%04v][%p%%]\ [lines=%L]
+set laststatus=2
 set foldmethod=indent
 set foldlevel=1
+set ignorecase
+set smartcase
+set smartindent
+set background=dark
 
-map zz za
+nmap <M-n> :cn
+nmap <C-M-n> :cN
+
+nmap <C-Tab> :tabn
+nmap <S-C-Tab> :tabN
+
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Enable file type detection.
+  " Use the default filetype settings, so that mail gets 'tw' set to 72,
+  " 'cindent' is on in C files, etc.
+  " Also load indent files, to automatically do language-dependent indenting.
+  filetype plugin indent on
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+  augroup END
+
+else
+
+  set autoindent		" always set autoindenting on
+
+endif " has("autocmd")
+
+
