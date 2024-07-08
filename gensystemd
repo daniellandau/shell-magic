@@ -1,0 +1,17 @@
+#!/bin/sh
+
+cat <<EOF
+[Unit]
+Description=
+#After=something.service
+
+[Service]
+#EnvironmentFile=-/path/to/shell/assignments
+Type=simple
+#ExecStart=/path/to/binary
+Restart=always
+#WorkingDirectory=/path/to/wd
+
+[Install]
+WantedBy=multi-user.target
+EOF

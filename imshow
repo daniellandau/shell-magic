@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+
+import sys
+import matplotlib.pyplot as plt
+from PIL import Image
+plt.imshow(Image.open(sys.argv[1]), interpolation='None')
+plt.colorbar()
+plt.show()
+

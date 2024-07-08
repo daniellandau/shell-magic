@@ -1,0 +1,3 @@
+#!/bin/bash
+
+notify-send "WC output" "Primary: $(wl-paste -p | wc | sed -re 's/ +/ /g')\nClipboard: $(wl-paste | wc | sed -re 's/ +/ /g')"

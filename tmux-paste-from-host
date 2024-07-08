@@ -1,0 +1,3 @@
+#!/bin/bash
+# argument 1, user@host
+ssh $1 'tmux save-buffer -' | wl-copy

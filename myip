@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo interfaces
+ip -4 -o addr | pluck 2 4
+
+echo
+echo external
+curl https://landau.fi/ip
+curl -4 https://landau.fi/ip
+echo
+

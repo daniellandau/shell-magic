@@ -1,0 +1,6 @@
+#!/bin/bash
+
+input=$(echo $1 | tr -d ',' | tr -d '.')
+shift
+
+echo $(python -c "print($input / 60 / 60 / 24)")

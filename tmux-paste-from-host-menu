@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mkfifo /tmp/tmuxpaste
+gnome-terminal -- zsh -c 'source ~/.zshrc; echo $hosts | tr " " "\n" | sort | uniq | fzf --print-query --cycle | tail -n1 >/tmp/tmuxpaste' &
+choice=$(cat /tmp/tmuxpaste)
+wait
+rm /tmp/tmuxpaste
+echo $choice
+tmux-paste-from-host $choice

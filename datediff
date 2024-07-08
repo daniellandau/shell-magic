@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+import sys
+from dateutil.parser import parse
+
+print(parse(sys.argv[2]) - parse(sys.argv[1]))

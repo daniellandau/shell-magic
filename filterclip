@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function filter {
+  mkfifo /tmp/filterclip
+  gnome-terminal -- bash -c 'cat ~/local/bin/filters | fzf --print-query --cycle | tail -n 1 >/tmp/filterclip' &
+  filterlines=$(cat /tmp/filterclip)
+  wait
+  rm /tmp/filterclip
+  if ! grep -e "$filterlines" ~/local/bin/filters >/dev/null
+  then
+    echo $filterlines >>~/local/bin/filters
+  fi
+  #echo $filterlines 1>&2
+  eval "$filterlines"
+}
+
+wl-paste | filter | wl-copy

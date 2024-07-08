@@ -1,0 +1,3 @@
+#!/bin/bash
+
+notify-send "seconds2time output" "$(wl-paste | xargs ~/local/bin/seconds2time)"

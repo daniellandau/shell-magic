@@ -1,0 +1,11 @@
+#!/bin/bash
+
+EPOCH=$(echo $1 | tr -d ',' | tr -d '.')
+shift
+
+if (( EPOCH > 1000000000000 )) # Includes milliseconds
+then
+  EPOCH=$((EPOCH / 1000))
+fi
+
+date -d @$EPOCH $@
